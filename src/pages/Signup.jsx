@@ -1,18 +1,39 @@
 import { useState, useEffect } from "react";
-import { Container, Row, Form, Col, Button } from "react-bootstrap";
 import { Link } from "react-router-dom";
+import { Container, Row, Form, Col, Button, Alert } from "react-bootstrap";
+import { useSignupMutation } from "../services/appApi";
 import "./Signup.css";
 
 const Signup = () => {
+  const [name, setName] = useState("");
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
+  const [signup, { error, isLoading, isError }] = useSignupMutation();
+
+  function handleSignup(event) {
+    event.preventDefault();
+    signup({ name, email, password });
+  }
 
   return (
     <Container>
       <Row>
         <Col md={6} className="signup__form--container">
-          <Form style={{ width: "100%" }}>
+          <Form style={{ width: "100%" }} onSubmit={handleSignup}>
             <h1>Create an account</h1>
+            {isError && <Alert variant="danger">{error.data}</Alert>}
+
+            <Form.Group>
+              <Form.Label>Name</Form.Label>
+              <Form.Control
+                type="text"
+                placeholder="Your name"
+                value={name}
+                onChange={(e) => setName(e.target.value)}
+                required
+              />
+            </Form.Group>
+
             <Form.Group>
               <Form.Label>Email Address</Form.Label>
               <Form.Control
@@ -36,7 +57,9 @@ const Signup = () => {
             </Form.Group>
 
             <Form.Group>
-              <Button type="submit">Signup</Button>
+              <Button type="submit" disabled={isLoading}>
+                Signup
+              </Button>
             </Form.Group>
             <p>
               Already have an account? <Link to="/login">Login</Link>{" "}

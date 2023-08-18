@@ -13,6 +13,9 @@ const Signup = () => {
   function handleSignup(event) {
     event.preventDefault();
     signup({ name, email, password });
+    setName("");
+    setEmail("");
+    setPassword("");
   }
 
   return (

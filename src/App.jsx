@@ -5,6 +5,7 @@ import "bootstrap/dist/css/bootstrap.min.css";
 import Login from "./pages/Login";
 import Signup from "./pages/Signup";
 import { useSelector } from "react-redux";
+import NewProduct from "./pages/NewProduct";
 
 const App = () => {
   const user = useSelector((state) => state.user);
@@ -22,6 +23,8 @@ const App = () => {
                 <Route path="/signup" element={<Signup />} />
               </>
             )}
+            <Route path="/new-product" element={<NewProduct />} />
+
             <Route path="*" element={<Home />} />
           </Routes>
         </BrowserRouter>
